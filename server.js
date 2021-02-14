@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 
 //(location, middleware[optional], callback)
 app.get('/', (req, res) =>{
-  res.send('<h1> Hi there, folks! </h1>')
+  res.send('<h1> Hi there, folksss! </h1>')
 }) 
 
 app.listen(port, () => console.log(`I'm listening on port ${port}`))
