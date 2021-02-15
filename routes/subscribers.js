@@ -18,6 +18,8 @@ router.get('/', async (req, res) => {
 router.get('/:id', getSubscriber, (req, res) => {
   res.send(res.subscriber)
 })
+
+
 //Creating one
 router.post('/', async (req, res) => {
   const subscriber = new Subscriber({
@@ -48,6 +50,7 @@ router.patch('/:id', getSubscriber, async (req, res) => {
     res.status(400).json({message: error.message})
   }
 })
+
 
 //Deleting one
 router.delete('/:id', getSubscriber, async (req, res) => {
