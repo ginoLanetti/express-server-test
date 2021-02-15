@@ -1,1 +1,27 @@
-GET http://localhost:3000
+GET http://localhost:3010/subscribers
+
+###
+
+GET http://localhost:3010/subscribers/602a5dbcccc76b39d23219a7
+
+###
+
+POST http://localhost:3010/subscribers
+Content-Type: application/json
+
+{
+  "name": "TOMKO",
+  "hairColor": "TOMKO CHANNEL"
+}
+
+###
+DELETE http://localhost:3010/subscribers/602a5ec2572fb33a0f808240
+
+###
+
+PATCH http://localhost:3010/subscribers/602a60152db4463a6ced11a4
+Content-Type: application/json
+
+{
+  "name": "Sromek"
+}

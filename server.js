@@ -1,13 +1,31 @@
+require('dotenv').config()
+
 const express = require('express');
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+const db = mongoose.connection
+
+db.on('error', (error) => console.error(error))
+db.once('open', (error) => console.log('connected to db'))
+
 
 const app = express();
 const port = process.env.PORT || 3010;
 
-//GET, PUT, POST, DELETE endpoints
+
+app.use(express.static('public'));
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }));
+
+
+const subscribersRouter = require('./routes/subscribers')
+app.use('/subscribers', subscribersRouter)
 
 //(location, middleware[optional], callback)
 app.get('/', (req, res) =>{
   res.send('<h1> Hi there, folks34567! </h1>')
 }) 
 
-app.listen(port, () => console.log(`I'm listening on port ${port}`))
+app.listen(port, () => console.log(`Dude, I'm listening on port ${port}`))
