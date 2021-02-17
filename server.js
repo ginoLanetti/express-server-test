@@ -14,6 +14,8 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
 
     app.set('view engine', 'ejs')
 
+    app.use(bodyParser.urlencoded({ extended: true }))
+
     app.get('/', (req, res) => {
       greetingsCollection.find().toArray()
         .then(results => {
@@ -24,6 +26,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     })
 
     app.post('/greetings', (req, res) => {
+      res.send(req.body)
       greetingsCollection.insertOne(req.body)
         .then( res.redirect('/'))
         .catch(err => console.error(err))
@@ -36,7 +39,7 @@ const app = express();
 const port = process.env.PORT || 3010;
 
 
-app.use(bodyParser.urlencoded({ extended: true }))
+
 
 
 app.listen(port, () => console.log(`I'm listening on port ${port}`))
