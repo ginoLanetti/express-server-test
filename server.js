@@ -1,45 +1,29 @@
+require('dotenv').config()
+
 const express = require('express');
-const path = require('path');
-const bodyParser= require('body-parser')
-const MongoClient = require('mongodb').MongoClient
+const mongoose = require('mongoose');
 
-const connectionString = 'mongodb+srv://express-test:Qmez6NZEOwjRsibM@cluster0.8j0fb.mongodb.net/express-server-db?retryWrites=true&w=majority'
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+const db = mongoose.connection
 
+db.on('error', (error) => console.error(error))
+db.once('open', (error) => console.log('connected to db'))
 
-
-MongoClient.connect(connectionString, { useUnifiedTopology: true })
-  .then(client => {
-    console.log('Connected to Database')
-    const db = client.db('express-server-db')
-    const greetingsCollection = db.collection('greetings')
-
-    app.set('view engine', 'ejs')
-
-    app.use(bodyParser.urlencoded({ extended: true }))
-
-    app.get('/', (req, res) => {
-      greetingsCollection.find().toArray()
-        .then(results => {
-          res.render('index.ejs', {greetings: results})
-        })
-        .catch(error => console.error(error))
-        
-    })
-
-    app.post('/greetings', (req, res) => {
-      greetingsCollection.insertOne(req.body)
-        .then( res.redirect('/'))
-        .catch(err => console.error(err))
-    })
-
-  })
-  .catch(err => console.error(err))
 
 const app = express();
 const port = process.env.PORT || 3010;
 
 
+app.use(express.static('public'));
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }));
+
+
+const subscribersRouter = require('./routes/subscribers')
+app.use('/subscribers', subscribersRouter)
 
 
 
-app.listen(port, () => console.log(`I'm listening on port ${port}`))
+
+app.listen(port, () => console.log(`Dude, I'm listening on port ${port}`))
