@@ -3,7 +3,8 @@ const path = require('path');
 const bodyParser= require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 
-const connectionString = 'mongodb+srv://express-test:Qmez6NZEOwjRsibM@cluster0.8j0fb.mongodb.net/<dbname>?retryWrites=true&w=majority'
+const connectionString = 'mongodb+srv://express-test:Qmez6NZEOwjRsibM@cluster0.8j0fb.mongodb.net/express-server-db?retryWrites=true&w=majority'
+
 
 
 MongoClient.connect(connectionString, { useUnifiedTopology: true })
@@ -26,7 +27,6 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     })
 
     app.post('/greetings', (req, res) => {
-      res.send(req.body)
       greetingsCollection.insertOne(req.body)
         .then( res.redirect('/'))
         .catch(err => console.error(err))
