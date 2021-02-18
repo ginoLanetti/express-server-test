@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const dbPath = process.env.NODE_ENV === 'production' ? 'mongodb+srv://express-test:VHCH84cY0c6e51yV@cluster0.8j0fb.mongodb.net/subscribers?retryWrites=true&w=majority' : 'mongodb://127.0.0.1:27017/subscribers';
 
+console.log(dbPath)
+console.log(process.env.NODE_ENV)
+
+
 const serverOptions = {
   auto_reconnect: true,
   poolSize: 10,

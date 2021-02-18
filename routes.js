@@ -13,6 +13,7 @@ module.exports = function routes(app) {
       name: req.body.name,
       hairColor: req.body.hairColor
     });
+    console.log(add)
     return res.send(process.env.NODE_ENV);
   });
 
