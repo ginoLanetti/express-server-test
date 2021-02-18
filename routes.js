@@ -1,6 +1,6 @@
 const Subscriber = require('./models/subscriber');
 const path = require('path');
-
+const createError = require('http-errors');
 
 module.exports = function routes(app) {
 
@@ -19,6 +19,13 @@ module.exports = function routes(app) {
   app.get('/subscribe', async (req, res) => {
     const get = await Subscriber.find().lean();
     return res.send(get);
+  });
+  app.use(function(req, res, next) {
+    next(createError(404));
+  });
+  app.use(function(err, req, res, next) {
+    console.log(err); 
+    res.status(err);
   });
 }
 
