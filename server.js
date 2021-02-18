@@ -14,14 +14,14 @@ const app = express();
 const port = process.env.PORT || 3010;
 
 
-app.use(express.static('public'));
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
-
 const subscribersRouter = require('./routes/subscribers')
 app.use('/subscribers', subscribersRouter)
+
+app.use(express.static('public'));
 
 
 app.listen(port, () => console.log(`Dude, I'm listening on port ${port}`))
