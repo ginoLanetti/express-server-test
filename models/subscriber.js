@@ -1,19 +1,24 @@
-const mongoose = require('mongoose')  
+const mongoose = rootRequire('db').mongoose;
 
-const subscriberSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  hairColor: {
-    type: String,
-    required: true
-  },
-  subscribeDate: {
-    type: Date,
-    required: true,
-    default: Date.now
+function subscriberSchema() {
+  const schema = {
+    name: {
+      type: String,
+      required: true
+    },
+    hairColor: {
+      type: String,
+      required: true
+    },
+    subscribeDate: {
+      type: Date,
+      required: true,
+      default: Date.now
+    }
   }
-})
-
-module.exports = mongoose.model('Subscriber', subscriberSchema)
+  const collectionName = 'subscriber';
+  const mongoSchema = mongoose.Schema(schema);
+  const Subscriber = mongoose.model(collectionName, mongoSchema);
+  return Subscriber;
+}
+module.exports = subscriberSchema();

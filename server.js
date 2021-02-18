@@ -3,6 +3,10 @@ require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 
+global.rootRequire = function(name) {
+  return require(__dirname + '/' + name);
+};
+
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
 
@@ -18,8 +22,7 @@ const port = process.env.PORT || 3010;
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
-const subscribersRouter = require('./routes/subscribers')
-app.use('/subscribers', subscribersRouter)
+const routes = require('./routes')(app);
 
 app.use(express.static('public'));
 
