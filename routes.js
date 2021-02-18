@@ -13,7 +13,7 @@ module.exports = function routes(app) {
       name: req.body.name,
       hairColor: req.body.hairColor
     });
-    return res.send(200);
+    return res.send(process.env.NODE_ENV);
   });
 
   app.get('/subscribe', async (req, res) => {
